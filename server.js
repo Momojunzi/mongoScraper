@@ -1,14 +1,14 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var request = require('request');
-var cheerio = require('cheerio');
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const request = require('request');
+const cheerio = require('cheerio');
 
-var db = require('./models');
+const db = require('./models');
 
-var PORT = 3000;
+const PORT = 3000;
 
-var app = express();
+const app = express();
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static('public'));
@@ -22,7 +22,7 @@ mongoose.connect('mongodb://localhost/mongoscraper_db', {
 app.get('/scrape', function(req, res){
   request("https://techcrunch.com/", function(error, response, html){
     let $ = cheerio.load(html);
-    let results = [];
+
     $('h2.post-title').each(function(i, element){
       let result = {};
 
@@ -40,14 +40,19 @@ app.get('/scrape', function(req, res){
         .catch(function(err){
           res.json(err);
         });
-
-      results.push({
-        title,
-        link
-      });
     });
-    console.log(results);
   });
+});
+
+app.get('/articles', function(req,res) {
+  db.Article
+    .find({})
+    .then(function(dbArticle) {
+      res.json(dbArticle);
+    })
+    .catch(function(err){
+      res.json(err);
+    });
 });
 
 // listen for connection
