@@ -1,0 +1,52 @@
+html, body {
+  box-sizing: border-box;
+  height: 100%;
+  background: #E3DCC2;
+}
+
+.page-header{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background: #A6A867;
+  margin-bottom: 20px;
+}
+
+.article-container {
+  display: none;
+  background:  #fdfdfd;
+}
+
+.article-header {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: #E3DC95;
+  margin-bottom: 10px
+}
+
+.articleButton {
+  background: #51513D;
+  margin-top: 30vh;
+}
+
+.articleTitle:hover {
+  color: #A6A867;
+  cursor: pointer;
+}
+
+.titleinput {
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  color: green;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #A6A867;
+  text-decoration: none;
+}
