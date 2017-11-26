@@ -3,7 +3,8 @@ var articleButton = $('#articleButton').on('click', function(event){
   $.get('/scrape').done(function(){
       $.getJSON('/articles', function(data){
         for(var i=0; i<data.length; i++){
-          $('#articles').append("<h3 class='articleTitle' data-toggle='modal' data-target='#notes-modal' data-id='" + data[i]._id + "'>" + data[i].title + "</h3><a href='"+data[i].link+"' target='_blank'><p>"+data[i].link + "</p></a><hr />");
+          $('#articles').append("<h3 class='articleTitle' data-toggle='modal' data-target='#notes-modal' data-id='" + data[i]._id + "'>" + data[i].title + "</h3>"+
+          "<h4 class='col-11'>"+data[i].summary+"</h4><a href='"+data[i].link+"' target='_blank'><p>"+data[i].link + "</p></a><hr />");
         }
       });
       $('.articleButton').css({'display': 'none'});
@@ -12,13 +13,10 @@ var articleButton = $('#articleButton').on('click', function(event){
 
 
 $(document).on('click', ".articleTitle", function(){
-  console.log('p clicked');
   $('#notes').empty();
   var thisId = $(this).attr('data-id');
   $.get('/articles/'+thisId)
     .done(function(data){
-      console.log(data);
-
         $(".modal-header").html("<h2 class='modal-title' id='modal-title'>" + data.title + "</h2>"+
                                   "<button type='button' class='close' data-dismiss='modal' aria-label='Close'>"+
                                   "<span aria-hidden='true'>&times;</span>"+
@@ -49,7 +47,6 @@ $(document).on('click', ".articleTitle", function(){
         body: $('#bodyinput').val(),
       })
         .done(function(data) {
-          console.log(data);
           $('#notes').empty();
         });
     $('#titleinput').val("");

@@ -17,6 +17,13 @@ const ArticleSchema = new Schema ({
     dropDups: true
   },
 
+  summary: {
+    type: String,
+    required: true,
+    unique: true,
+    dropDups: true
+  },
+
   note: {
     type: Schema.Types.ObjectId,
     ref: "Note"
