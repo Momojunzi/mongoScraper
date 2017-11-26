@@ -24,7 +24,7 @@ mongoose.connect(MONGODB_URI, {
 app.get('/scrape', function(req, res){
   request("https://techcrunch.com/", function(error, response, html){
     let $ = cheerio.load(html);
-
+    console.log('scraped');
     $('h2.post-title').each(function(i, element){
       let result = {};
 
@@ -50,6 +50,7 @@ app.get('/articles', function(req,res) {
   db.Article
     .find({})
     .then(function(dbArticle) {
+      console.log(dbArticle);
       res.json(dbArticle);
     })
     .catch(function(err){
