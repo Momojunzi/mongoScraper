@@ -1,6 +1,11 @@
+$(function(){
+  $.get('/scrape', function(data){
+    console.log(data);
+  });
+})
+
 var articleButton = $('#articleButton').on('click', function(event){
   $('.article-container').css({'display': 'block'});
-  $.get('/scrape').done(function(){
       $.getJSON('/articles', function(data){
         for(var i=0; i<data.length; i++){
           $('#articles').append("<h3 class='articleTitle' data-toggle='modal' data-target='#notes-modal' data-id='" + data[i]._id + "'>" + data[i].title + "</h3>"+
@@ -8,9 +13,7 @@ var articleButton = $('#articleButton').on('click', function(event){
         }
       });
       $('.articleButton').css({'display': 'none'});
-    });
   })
-
 
 $(document).on('click', ".articleTitle", function(){
   $('#notes').empty();

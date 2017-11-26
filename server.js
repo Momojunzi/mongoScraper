@@ -24,28 +24,19 @@ mongoose.connect(MONGODB_URI, {
 app.get('/scrape', function(req, res){
   request("https://techcrunch.com/", function(error, response, html){
     let $ = cheerio.load(html);
-    let result = {};
-    $('h2.post-title').each(function(i, element){
-
-      let title = $(element).children().text();
-      let link = $(element).children().attr('href');
-
-      result.title = title;
-      result.link = link;
-      $('p.excerpt').each(function(i, element){
-        let summary = $(element).text();
-        result.summary = summary;
-        db.Article
-          .create(result)
-          .then(function(dbArticle){
-            res.send('Scrape Complete');
-          })
-          .catch(function(err){
-            res.json(err);
-          });
-      });
+    $('div.block-content').each(function(i, element){
+      let result = {};
+      result.title = $(element).children('h2.post-title').children().text();
+      result.link = $(element).children('h2.post-title').children().attr('href');
+      result.summary = $(element).children('p.excerpt').text();
+      db.Article
+        .create(result)
+        .catch(function(err){
+          res.json(err);
+        });
     });
   });
+  res.json("scrape complete");
 });
 
 app.get('/articles', function(req,res) {
